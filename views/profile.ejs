@@ -1,4 +1,4 @@
-  <!doctype html>
+    <!doctype html>
   <html>
   <head>
       <title>EduMonk</title>
@@ -15,7 +15,9 @@
               width:90px;
               height:90px;
               font-size:14px;}
-          .well{height:200px;}
+          .well{height:200px;
+              width:300px;
+         }
       </style>
   </head>
   <body>
@@ -44,10 +46,10 @@
 <div class="row">
 <div class="col-lg-3 col-lg-offset-0">
 <div>
-    <img id="profileImage" src="" height="200" width="200">
+    <img id="profileImage" src="" height="300" width="300">
 </div>
 </div>
-<div class="col-lg-offset-0 col-lg-4">
+<div class="col-lg-offset-1 col-lg-5">
   <% if(user.google.token) { %>
 <h3><%=  user.google.name %></h3>
 <h3><%=  user.google.email %></h3>
@@ -56,13 +58,11 @@
 <h3><%=  user.facebook.email %></h3>
 <% } %>
 </div>
-
-
 </div>
-<form action="profile" method="post"><input type="text" name="check">
-<input type="submit"></form>
 
-<div class="container">
+
+
+
 
 
 <br><br><br>
@@ -83,84 +83,84 @@
                 <% } %>
 
             </div>
-        </div>
-
-        <div class="col-sm-4">
             <div class="well">
                 <h3 class="text-primary"><span class="fa fa-facebook"></span> Facebook</h3>
 
                 <% if (user.facebook.token) { %>
-                    <p>
+                <p>
 
-                        <strong>Facebook Id</strong>: <%= user.facebook.id %><br>
-                        <strong>Facebook Email</strong>: <%= user.facebook.email %><br>
-                        <strong>Facebook Name</strong>: <%= user.facebook.name %><br>
-                    </p>
+                    <strong>Facebook Id</strong>: <%= user.facebook.id %><br>
+                    <strong>Facebook Email</strong>: <%= user.facebook.email %><br>
+                    <strong>Facebook Name</strong>: <%= user.facebook.name %><br>
+                </p>
 
-                    <a href="/auth/unlink/facebook" class="btn btn-primary">Unlink</a>
+                <a href="/auth/unlink/facebook" class="btn btn-primary">Unlink</a>
                 <% } else { %>
-                    <a href="/auth/connect/facebook" class="btn btn-primary">Connect Facebook</a>
+                <a href="/auth/connect/facebook" class="btn btn-primary">Connect Facebook</a>
                 <% } %>
 
             </div>
-        </div>
-
-
-
-        <div class="col-sm-4">
             <div class="well">
                 <h3 class="text-danger"><span class="fa fa-google-plus"></span> Google+</h3>
 
                 <% if (user.google.token) { %>
-                    <p>
-                        <strong>Google Id</strong>: <%= user.google.id %><br>
-                        <strong>Google Email</strong>: <%= user.google.email %><br>
-                        <strong>Google Name</strong>: <%= user.google.name %>
-                    </p>
+                <p>
+                    <strong>Google Id</strong>: <%= user.google.id %><br>
+                    <strong>Google Email</strong>: <%= user.google.email %><br>
+                    <strong>Google Name</strong>: <%= user.google.name %>
+                </p>
 
-                    <a href="/auth/unlink/google" class="btn btn-danger">Unlink</a>
+                <a href="/auth/unlink/google" class="btn btn-danger">Unlink</a>
                 <% } else { %>
-                    <a href="/auth/connect/google" class="btn btn-danger">Connect Google</a>
+                <a href="/auth/connect/google" class="btn btn-danger">Connect Google</a>
                 <% } %>
 
             </div>
         </div>
+<div class="col-sm-8">
+    <h1 class="text-center">My Blog List <button onclick="showAddBlog()" class="btn-circle btn btn-primary fa fa-plus fa-2x">Add a blog</button></h1>
+    <div class="row">
+        <div class="col-lg-offset-2 col-lg-8">
+            <form id="myForm" action="profile" method="post" style="display:none">
+                <div class="form-group">
+                    <label>Blog Title</label>
+                    <input type="text" class="form-control" name="title">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" class="form-control" name="description">
+                </div>
+                <div class="form-group">
+                    <label>Blog</label>
+                    <input type="text" class="form-control" name="content">
+                </div>
+                <button type="button" class="btn btn-danger" onclick="showAddBlog()">Cancel</button>
+                <button type="submit" class="btn btn-success">Post</button>
+            </form>
+        </div>
     </div>
+    <% for(var i=user.data.blogs.length-1; i>=0 ;i--){ %>
+    <div >
+        <div><span  style="font-size:25px"><%= user.data.blogs[i].title %>: &nbsp&nbsp;<%= user.data.blogs[i].description %>
+                <button style="float:right" class="btn btn-danger">Delete</button>
+                <button style="float:right" class="btn btn-primary"  onclick="readBlog(this)">Read</button>
+            </span>
 
-<button onclick="showAddBlog()" class="btn-circle btn btn-primary fa fa-plus fa-2x">Add a blog</button>
+        <p id="blog-content" style="display:none"><%= user.data.blogs[i].content %></p>
+    </div>
+    <% } %>
 
-
-<div class="row">
-<div class="col-lg-offset-2 col-lg-8">
-    <form id="myForm" action="profile" method="post" style="display:none">
-        <div class="form-group">
-            <label>Blog Title</label>
-            <input type="text" class="form-control" name="title">
-        </div>
-        <div class="form-group">
-            <label>Description</label>
-            <input type="text" class="form-control" name="description">
-        </div>
-        <div class="form-group">
-            <label>Blog</label>
-            <input type="text" class="form-control" name="content">
-        </div>
-      <button class="btn btn-danger" onclick="showAddBlog()">Cancel</button>
-    <button type="submit" class="btn btn-success">Post</button>
-    </form>
-  </div>
 </div>
 
+    </div>
 
 
-    <h3>Blog List</h3>
-    <% for(var i=0 ; i<user.data.blogs.length; i++){ %>
-      <div >
-        <h1><%= user.data.blogs[i].title %> <button style="float:right" class="btn btn-danger">Delete</button></h1>
-        <h3>Description : <%= user.data.blogs[i].description %><//h3>
-        <p><%= user.data.blogs[i].content %></p>
-        </div>
-      <% } %>
+
+
+
+
+
+
 
 
 
@@ -196,11 +196,25 @@
       else if(userFacebookId){
           $("#profileImage").attr('src','http://graph.facebook.com/'+userFacebookId+'/picture?type=large');
       }
+var read;
+
+var readBlog=function(element){
+    let read=false;
+if(!read){
+    $("#blog-content").css("display","block");
+    $(element).removeClass("btn-primary");
+    $(element).addClass("btn-success");
+    read=true;
+}
+else{
+    $("#blog-content").css("display","none");
+    $(element).removeClass("btn-success");
+    $(element).addClass("btn-primary");
+    read=false;
+}
 
 
-
-
-
+};
 
 
   </script>
