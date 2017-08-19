@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+<head>
+    <title>EduMonk</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <script src="http://localhost:8080/board-univ.js"></script>
+    <script src="http://localhost:8080/state.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <style>
+
+     .well{width:340px;}
+    </style>
+</head>
+<body>
+
+<!--hidden from the end user-->
+<div>
+    <span style="display:none"  id="googleId"><%= user.google.id %></span>
+    <span style="display:none"  id="facebookId"><%= user.facebook.id %></span>
+    <span style="display:none" id="userPersonalPresent"><%= user.data.info.name %></span>
+</div>
+
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">EduMonk</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="active"><a href="/profile"><%= user.data.info.name || "Profile"%></a></li>
+            <li ><a href="#">Scholarships</a></li>
+            <li><a href="/profile/settings" class="fa fa-cog"> Settings</a></li>
+            <li><a  href="/auth/logout" class="  fa fa-user"> Logout</a></li>
+        </ul>
+    </div>
+</nav>
+<span style="display:none" ><%= user.data.info.name%></span>
+<div class="row">
+    <div class="col-sm-4">
+        <h2>Accounts</h2>
+        <div class="well">
+            <h3><span class="fa fa-user"></span> Local</h3>
+
+            <% if (user.local.email) { %>
+            <p>
+                <strong>SignUp Email</strong>: <%= user.local.email %><br>
+            </p>
+
+            <a href="/auth/unlink/local" class="btn btn-default">Unlink</a>
+            <% } else { %>
+            <a href="/connect/local" class="btn btn-default">Connect Local</a>
+            <% } %>
+
+        </div>
+        <div class="well">
+            <h3 class="text-primary"><span class="fa fa-facebook"></span> Facebook</h3>
+
+            <% if (user.facebook.token) { %>
+            <p>
+
+                <strong>Facebook Id</strong>: <%= user.facebook.id %><br>
+                <strong>Facebook Email</strong>: <%= user.facebook.email %><br>
+                <strong>Facebook Name</strong>: <%= user.facebook.name %><br>
+            </p>
+
+            <a href="/auth/unlink/facebook" class="btn btn-primary">Unlink</a>
+            <% } else { %>
+            <a href="/auth/connect/facebook" class="btn btn-primary">Connect Facebook</a>
+            <% } %>
+
+        </div>
+        <div class="well">
+            <h3 class="text-danger"><span class="fa fa-google-plus"></span> Google+</h3>
+
+            <% if (user.google.token) { %>
+            <p>
+                <strong>Google Id</strong>: <%= user.google.id %><br>
+                <strong>Google Email</strong>: <%= user.google.email %><br>
+                <strong>Google Name</strong>: <%= user.google.name %>
+            </p>
+
+            <a href="/auth/unlink/google" class="btn btn-danger">Unlink</a>
+            <% } else { %>
+            <a href="/auth/connect/google" class="btn btn-danger">Connect Google</a>
+            <% } %>
+
+        </div>
+    </div>
+    <div class="col-sm-8">
+
+        <div id="pInfoExist" ><h2>Personal Information</h2>
+            <h3>Name:<%= user.data.info.name  %></h3>
+            <h3>Guardian:<%= user.data.info.guardian %></h3>
+            <h3>Date Of Birth:<%= user.data.info.DOB %></h3>
+            <h3>Email:<%= user.data.info.email %></h3>
+        </div><br>
+        <div id="pInfoNotExist">
+            <h2>It Seems a bit empty here !</h2>
+            <a class="btn btn-primary" href="profile">Complete your profile first </a>
+        </div>
+    </div >
+</div>
+
+<div class="col-lg-6 col-lg-offset-3">
+    <h3 class="text-center">Academic Qualifications</h3>
+    <form  id="professionalInfoForm"  action="settings" method="post">
+        <select class="form-control" name="highestQualificationInfo">
+            <option selected="true" disabled="disabled">Highest Qualification</option>
+            <option value="eigth">High School</option>
+            <option value="tenth">Secondary Education 10th </option>
+            <option value="twelfth">Senior Secondary Education 12th</option>
+            <option value="ug">UnderGraduate</option>
+            <option value="pg">Postgraduate</option>
+        </select><br>
+        <select class="form-control" id="boardUniv">
+            <option disabled="disabled" selected="true">Select Board/University</option>
+        </select><br>
+        <select class="form-control" name="course">
+            <option disabled="disabled" selected="true">Select Course</option>
+            <option value="secondary">Secondary</option>
+            <option value="senior secondary">Senior Secondary</option>
+            <option value="BA">Bachelors in Arts</option>
+        </select><br>
+        <input class="form-control" type="text" name="schoolCollegeName" placeholder="School/College Name"><br>
+        <select class="form-control" name="academicState" id="academicState">
+            <option selected="true" disabled="disabled" >Select State</option>
+        </select><br>
+        <select name="completion" id="completionDate" class="form-control" placeholder=""Completion Year>
+            <option selected="true" disabled="disabled">Year</option>
+            <option value="2016">2016</option>
+            <option value="2015">2015</option>
+            <option value="2014">2014</option>
+            <option value="2013">2013</option>
+            <option value="2012">2012</option>
+            <option value="2011">2011</option>
+            <option value="2010">2010</option>
+            <option value="2009">2009</option>
+            <option value="2008">2008</option>
+            <option value="2007">2007</option>
+        </select><br>
+        <input class="form-control"   name="marks_cgpa" placeholder="Percentage or CGPA"><br>
+        <!--<span>Add Educational Qualification </span><button type="button" class="fa fa-plus btn btn-primary btn-circle" onclick="addAcademic()"></button>-->
+        <button type="submit" class="btn btn-primary" >Submit</button>
+    </form>
+
+</div>
+<%= user.data%>
+</body>
+<script>
+    var userPersonalPresent=$("#userPersonalPresent").html();
+    if(userPersonalPresent==''){
+        $('#pInfoExist').css("display","none");
+        $('#pInfoNotExist').css("display","block");
+    }
+    else if(!(userPersonalPresent=='')){
+        $('#pInfoNotExist').css("display","none");
+        $('#pInfoExist').css('display',"block");
+    }
+
+    var academicState=document.getElementById("academicState");
+    addState(academicState);
+
+    var boardUniv=document.getElementById("boardUniv");
+    addOptionBoardUniv(boardUniv);
+
+
+
+    </script>
+
+</html>

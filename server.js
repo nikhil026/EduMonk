@@ -4,7 +4,6 @@ var port     = process.env.PORT || 8080;
 var mongoose = require('mongoose');
 var passport = require('passport');
 var flash    = require('connect-flash');
-
 var morgan       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
@@ -38,6 +37,7 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash());
 
+
 var auth=express.Router();
 require('./app/routes/auth.js')(auth,passport);
 app.use('/auth',auth);
@@ -46,17 +46,9 @@ var api=express.Router();
 require('./app/routes/api.js')(api,passport);
 app.use('/api',api);
 
-
-
-
-
 var secure=express.Router();
 require('./app/routes/secure.js')(secure,passport);
 app.use('/',secure);
-
-
-
-// require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
 app.listen(port);
 console.log('The magic happens on port ' + port);

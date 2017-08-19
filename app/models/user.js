@@ -22,7 +22,32 @@ var userSchema = mongoose.Schema({
         name         : String
     },
     data            :            {
-      info :        [String],
+      info :
+          {
+              name      : String,
+              email     : String,
+              gender    : String ,
+              DOB       : Date,
+              state     : String,
+              contact   : String,
+              guardian  :  String,
+              guardianContact:String
+
+          },
+        pInfo:{
+          education:{
+              highestQualification:{
+               qualification:String,
+                board_univ:String,
+                course:String,
+                school_college:String,
+                  state:String,
+                  percentage_cgpa:String,
+                  completion:String
+
+              }
+          }
+        },
       blogs :      [
                     { title:String,
                       description:String,

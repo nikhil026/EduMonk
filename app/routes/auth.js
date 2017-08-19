@@ -92,7 +92,8 @@ module.exports = function(router, passport) {
 
     router.get('/unlink/facebook', isLoggedIn, function(req, res) {
         var user            = req.user;
-        user.facebook.token = undefined;
+        user.facebook = undefined;
+
         user.save(function(err) {
             res.redirect('/profile');
         });
@@ -102,7 +103,7 @@ module.exports = function(router, passport) {
 
     router.get('/unlink/google', isLoggedIn, function(req, res) {
         var user  = req.user;
-        user.google.token = undefined;
+        user.google=undefined;
         user.save(function(err) {
             res.redirect('/profile');
         });

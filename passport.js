@@ -7,7 +7,6 @@ var emailCheck=require('email-check');
 var isEmail=require('isemail');
 
 var User = require('../app/models/user');
-
 var configAuth = require('./auth');
 
 
@@ -37,11 +36,11 @@ module.exports = function(passport) {
             if (err)
                     return done(err);
 
-            else if (!user)
-                  return done(null, false, req.flash('loginMessage', 'No user found.'));
+            if (!user)
+                  {return done(null, false, req.flash('loginMessage', 'No user found.'));}
 
-            else if (!user.validPassword(password))
-                     return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
+            if (!user.validPassword(password)){
+                     return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));}
              else
                     return done(null, user);
             });
@@ -58,7 +57,6 @@ module.exports = function(passport) {
         passReqToCallback : true
     },
     function(req, email, password, done) {
-
         if(email && isEmail.validate(email))
         {email = email.toLowerCase();
         console.log(isEmail.validate(email));}
@@ -70,7 +68,8 @@ module.exports = function(passport) {
                         return done(err);
                     if (user) {
                         return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-                    } else {
+                    }
+                    else{
 
                         var newUser= new User();
 
@@ -93,7 +92,8 @@ module.exports = function(passport) {
 
                     if (user) {
                         return done(null, false, req.flash('loginMessage', 'That email is already taken.'));
-                    } else {
+                    }
+                    else {
                         var user = req.user;
                         user.local.email = email;
                         user.local.password = user.generateHash(password);
@@ -240,7 +240,7 @@ module.exports = function(passport) {
                 user.google.id    = profile.id;
                 user.google.token = token;
                 user.google.name  = profile.displayName;
-                user.google.email = (profile.emails[0].value || '').toLowerCase();
+                user.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
 
                 user.save(function(err) {
                     if (err)

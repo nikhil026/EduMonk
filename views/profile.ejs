@@ -1,221 +1,382 @@
-    <!doctype html>
-  <html>
-  <head>
-      <title>EduMonk</title>
-      <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-      <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-      <style>
-          body{
-              padding-top:0px; word-wrap:break-word;
-              overflow-x: hidden;
-          }
-          .btn-circle {
-              border-radius:50%;
-              width:90px;
-              height:90px;
-              font-size:14px;}
-          .well{height:200px;
-              width:300px;
-         }
-      </style>
-  </head>
-  <body>
+<!doctype html>
+<html>
+<head>
+    <title>EduMonk</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <script src="board-univ.js"></script>
+    <script src="state.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-  <!--hidden from the end user-->
-  <div>
-      <span style="display:none"  id="googleId"><%= user.google.id %></span>
-      <span style="display:none"  id="facebookId"><%= user.facebook.id %></span>
-  </div>
+    <style>
+        body{
+            padding-top:0px; word-wrap:break-word;
+            overflow-x: hidden;
+        }
+        .btn-circle {
+            border-radius:50%;
+            width:90px;
+            height:90px;
+            font-size:14px;}
+        .well{height:200px;
+            width:300px;
+        }
+        .btn-icon{
+            height:30px;
+            width:30px;
+            border-radius:50%;
+        }
+        #formContainer{
+            background-color:rgba(0,0,0,0.8);
+            z-index:5;
+            height:900px;
+            color:white;
+            display:none;
+            position:absolute;
+            top:100px;
+            font-size:20px;
+        }
 
+        #personalInfo:target, #personalInfo:target + #cover{
+            display:block;
+            opacity:2;
+        }
+        .cancel
+        {
+            display:block;
+            position:absolute;
+            top:3px;
+            right:2px;
 
-    <nav class="navbar navbar-default">
-  <div class="container">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">EduMonk</a>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li ><a href="#">Home</a></li>
-      <li class="active"><a href="#">Profile</a></li>
-      <li><a href="#" class="fa fa-cog"> Settings</a></li>
-      <li><a  href="/auth/logout" class="  fa fa-user"> Logout</a></li>
-    </ul>
-  </div>
-</nav>
-<div class="container">
-<div class="row">
-<div class="col-lg-3 col-lg-offset-0">
+            color:black;
+            height:30px;
+            width:35px;
+            font-size:30px;
+            text-decoration:none;
+            text-align:center;
+            font-weight:bold;
+        }
+        .submissionError{
+            color:red;
+            font:15px;
+        }
+     #portfolio{
+         background-color:yellow;
+         font-size:50px;
+         text-align:center;
+         height:100px;
+         padding:10px;
+     }
+        #myblog{
+            background-color:red;
+            font-size:50px;
+            text-align:center;
+            height:100px;
+            padding:10px;
+        }
+    </style>
+</head>
 <div>
-    <img id="profileImage" src="" height="300" width="300">
-</div>
-</div>
-<div class="col-lg-offset-1 col-lg-5">
-  <% if(user.google.token) { %>
-<h3><%=  user.google.name %></h3>
-<h3><%=  user.google.email %></h3>
-<% }else if(user.facebook.token){ %>
-<h3><%= user.facebook.name %> </h3>
-<h3><%=  user.facebook.email %></h3>
-<% } %>
-</div>
+
+<!--hidden from the end user-->
+<div>
+    <span style="display:none"  id="googleId"><%= user.google.id %></span>
+    <span style="display:none"  id="facebookId"><%= user.facebook.id %></span>
+    <span   style="display:none" id="personalInfoExisting"><%= (user.data.info.name)%></span>
 </div>
 
-
-
-
-
-
-<br><br><br>
-
-    <div class="row">
-        <div class="col-sm-4">
-            <div class="well">
-                <h3><span class="fa fa-user"></span> Local</h3>
-
-                <% if (user.local.email) { %>
-                    <p>
-                        <strong>SignUp Email</strong>: <%= user.local.email %><br>
-                    </p>
-
-                    <a href="/auth/unlink/local" class="btn btn-default">Unlink</a>
-                <% } else { %>
-                    <a href="/connect/local" class="btn btn-default">Connect Local</a>
-                <% } %>
-
-            </div>
-            <div class="well">
-                <h3 class="text-primary"><span class="fa fa-facebook"></span> Facebook</h3>
-
-                <% if (user.facebook.token) { %>
-                <p>
-
-                    <strong>Facebook Id</strong>: <%= user.facebook.id %><br>
-                    <strong>Facebook Email</strong>: <%= user.facebook.email %><br>
-                    <strong>Facebook Name</strong>: <%= user.facebook.name %><br>
-                </p>
-
-                <a href="/auth/unlink/facebook" class="btn btn-primary">Unlink</a>
-                <% } else { %>
-                <a href="/auth/connect/facebook" class="btn btn-primary">Connect Facebook</a>
-                <% } %>
-
-            </div>
-            <div class="well">
-                <h3 class="text-danger"><span class="fa fa-google-plus"></span> Google+</h3>
-
-                <% if (user.google.token) { %>
-                <p>
-                    <strong>Google Id</strong>: <%= user.google.id %><br>
-                    <strong>Google Email</strong>: <%= user.google.email %><br>
-                    <strong>Google Name</strong>: <%= user.google.name %>
-                </p>
-
-                <a href="/auth/unlink/google" class="btn btn-danger">Unlink</a>
-                <% } else { %>
-                <a href="/auth/connect/google" class="btn btn-danger">Connect Google</a>
-                <% } %>
-
-            </div>
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">EduMonk</a>
         </div>
-<div class="col-sm-8">
-    <h1 class="text-center">My Blog List <button onclick="showAddBlog()" class="btn-circle btn btn-primary fa fa-plus fa-2x">Add a blog</button></h1>
-    <div class="row">
-        <div class="col-lg-offset-2 col-lg-8">
-            <form id="myForm" action="profile" method="post" style="display:none">
-                <div class="form-group">
-                    <label>Blog Title</label>
-                    <input type="text" class="form-control" name="title">
-                </div>
-                <div class="form-group">
-                    <label>Description</label>
-                    <input type="text" class="form-control" name="description">
-                </div>
-                <div class="form-group">
-                    <label>Blog</label>
-                    <input type="text" class="form-control" name="content">
-                </div>
-                <button type="button" class="btn btn-danger" onclick="showAddBlog()">Cancel</button>
-                <button type="submit" class="btn btn-success">Post</button>
-            </form>
-        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="active"><a href="/profile"><img id="profileIcon"  src=""  width="300" class="btn-icon"> &nbsp;&nbsp;<%= user.data.info.name || "Profile"%></a></li>
+            <li ><a href="#">Scholarships</a></li>
+            <li><a href="/profile/settings" class="fa fa-cog"> Settings</a></li>
+            <li><a  href="/auth/logout" class="  fa fa-user"> Logout</a></li>
+        </ul>
     </div>
-    <% for(var i=user.data.blogs.length-1; i>=0 ;i--){ %>
-    <div >
-        <div><span  style="font-size:25px"><%= user.data.blogs[i].title %>: &nbsp&nbsp;<%= user.data.blogs[i].description %>
-                <button style="float:right" class="btn btn-danger">Delete</button>
-                <button style="float:right" class="btn btn-primary"  onclick="readBlog(this)">Read</button>
+</nav>
+<div class="row" style="background-color:rgb(192, 222, 237);width:100%;height:400px">
+
+    <div class="col-lg-3 col-lg-offset-2 col-md-4 col-md-offset-3 col-sm-4 col-sm-offset-1 col-xs-6 col-xs-offset-3" >
+        <img id="profileImage" style="margin-top:100px" src=""  width="300" class="img-circle    ">
+    </div>
+    <div class="col-lg-offset-0 col-lg-3 col-md-4 col-md-offset-1 col-lg-offset-2 col-sm-3 col-sm-offset-2 col-xs-8 col-xs-offset-1" style="margin-top:100px">
+        <div>
+            <%if(!(user.data.info.name==undefined)){%>
+            <h1>Name:<%= user.data.info.name %></h1>
+            <h3>Email:<%= user.data.info.email || user.local.email %></h3>
+            <h3>Age :<%= Math.floor((new Date()-user.data.info.DOB)/365/24/60/60/1000) %>+</h3>
+            <h3>Location:<%= user.data.info.state%></h3></div>
+        <%} else if(user.google.token) { %>
+        <h4>Name:<%=  user.google.name %></h4>
+        <h4>Email:<%=  user.google.email %></h4>
+        <% }else if(user.facebook.token){ %>
+        <h4>Name:<%= user.facebook.name %> </h4>
+        <h4>Email<%=  user.facebook.email %></h4>
+        <% } else {%>
+        <h4>Email:<%= user.local.email %></h4>
+        <% } %>
+        <button class="btn btn-primary" id="contact">Complete/Edit Your Profile</button>
+    </div>
+</div>
+
+
+<div class="col-lg-8 col-sm-10 col-sm-offset-1 col-xs-12 col-lg-offset-2 "  style="display:none" id="formContainer">
+            <a class="fa fa-times cancel"  style="color:white" > </a>
+            <form id="contactForm" action="profile" method="post" onsubmit="return validateContactForm()" style="margin:20px;">
+                <div class="text-center">
+                    <h1>Let's Complete Your Profile !</h1>
+                    <h2>Personal Information</h2></div>
+                    <br><br>
+                    <input class="form-control" type="text" placeholder="Name" name="name"><span id="nameError" class="submissionError"></span><br>
+                    <label>Gender:</label>
+                    <label>Male</label> <input type="radio" value="M" name="gender" checked>&nbsp;
+                    <label>Female</label> <input type="radio" value="F" name="gender"><br><br>
+                    <label>Date of Birth</label><input class="form-control" type="date" name="DOB" ><span class="submissionError" id="DOBError"></span><br>
+                    <label>Select State</label>
+                    <select class="form-control" name="state" id="contactState"><span id="stateError" class="submissionError"></span>
+                        <option selected="true" disabled="disabled" value="">Select State</option>x
+                    </select><br>
+                    <label>Contact</label>
+                    <input class="form-control" type="text" placeholder="Contact Number" name="contactNo"><span id="contactError" class="submissionError"></span><br>
+                    <label>Guardian</label>
+                    <input class="form-control" type="text" placeholder="Guardian Name" name="guardianName"><span id="guardianError" class="submissionError"></span><br>
+                    <label>Guardian Contact Number</label>
+                     <input class="form-control" type="text" placeholder="Guardian Contact Number" name="guardianContactNo"><span id="guardianContactError" class="submissionError"></span><br>
+                    <input class="form-control btn btn-primary" type="submit" value="Submit">
+                </form>
+            </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6" id="portfolio"><span>Portfolio</span></div>
+        <div class="col-lg-6"  id="myblog"><span >MyBlogs</span></div>
+    </div>
+</div>
+
+<div id="myPortfolio" >
+    <br><br>
+   <div class="container">
+       <div class="row">
+           <div class="col-lg-6 col-lg-offset-3" id="skillForm">
+               <span style="font-size:50px;">Add a Skill <button class="fa fa-plus btn btn-primary btn-circle" onclick()="addSkill()"></button></span>
+           </div>
+       </div>
+
+   </div>
+</div>
+<div id="myBlogs" style="display:none"><div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="text-center">My Blog List - Add a blog &nbsp;<button onclick="showAddBlog()" class="btn-circle btn btn-primary fa fa-plus fa-2x" style="font-size:25px"></button></h1>
+                <div class="row">
+                    <div class="col-lg-offset-2 col-lg-8">
+                        <form id="myForm" action="profile" method="post" style="display:none">
+                            <div class="form-group">
+                                <label>Blog Title</label>
+                                <input type="text" class="form-control" name="title">
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <input type="text" class="form-control" name="description">
+                            </div>
+                            <div class="form-group">
+                                <label>Blog</label>
+                                <input type="text" class="form-control" name="content">
+                            </div>
+                            <button type="button" class="btn btn-danger" onclick="showAddBlog()">Cancel</button>
+                            <button type="submit" class="btn btn-success">Post</button>
+                        </form>
+                    </div>
+                </div>
+                <% for(var i=user.data.blogs.length-1; i>=0 ;i--){ %>
+                <div >
+                    <div><span  style="font-size:25px"><%= user.data.blogs[i].title %>: &nbsp&nbsp;<%= user.data.blogs[i].description %>
+                            <button  style="float:right" class="btn btn-danger" type="submit" action="profile" method="get">Delete</button>
+                            <button style="float:right" class="btn btn-primary"  onclick="readBlog(this)">Read</button>
+
             </span>
+                        <p id="blog-content" style="display:none"><%= user.data.blogs[i].content %></p>
+                    </div>
+                    <% } %>
 
-        <p id="blog-content" style="display:none"><%= user.data.blogs[i].content %></p>
+                </div>
+
+            </div>
+        </div>
     </div>
-    <% } %>
 
 </div>
 
+
+
+
+
     </div>
+</div>
 
 
 
 
+</body>
 
-
-
-
-
-
-
-
-  </div>
-  </body>
-
-  <script>
-      var userGoogleId=$("#googleId").html();
-      var userFacebookId=$("#facebookId").html();
-      console.log(userGoogleId);
-      console.log(userFacebookId);
-        var showme=false;
-   var showAddBlog=function(){
-    if(!showme){
-      document.getElementById("myForm").style.display="block";
-      showme=!showme;
+<script>
+    setTimeout(1000,console.log('hello'));
+    var userGoogleId=$("#googleId").html();
+    var userFacebookId=$("#facebookId").html();
+    var personalInfoExisting=$("#personalInfoExisting").html();
+    console.log(userGoogleId);
+    console.log(userFacebookId);
+    console.log(personalInfoExisting);
+    if(personalInfoExisting==''){
+        $("#formContainer").css("display","block");
     }
+
+
+
+    var showme=false;
+    var showAddBlog=function(){
+        if(!showme){
+            document.getElementById("myForm").style.display="block";
+            showme=!showme;
+        }
+        else{
+            document.getElementById("myForm").style.display="none";
+            showme=!showme;
+        }
+
+    }
+
+    var imageSource;
+    if(userFacebookId){
+        $("#profileImage").attr('src','http://graph.facebook.com/'+userFacebookId+'/picture?type=large');
+        $("#profileIcon").attr('src','http://graph.facebook.com/'+userFacebookId+'/picture?type=large');
+    }
+    else if(userGoogleId)
+    {$.getJSON('https://www.googleapis.com/plus/v1/people/'+userGoogleId+'?fields=image&key=AIzaSyBh-gi9cHRZFiuggtSprJJLeXTu8ePk0FI', function(data) {
+        imageSource=data.image.url;
+        console.log(imageSource.length)
+        $("#profileImage").attr('src',imageSource);
+        $("#profileIcon").attr('src',imageSource);
+    });}
     else{
-      document.getElementById("myForm").style.display="none";
-      showme=!showme;
+        $("#profileImage").attr('src','http://localhost:8080/default-profile.jpg');
+        $("#profileIcon").attr('src','http://localhost:8080/default-profile.jpg');
     }
 
-  }
 
-  var imageSource='testcontent';
-      if(userGoogleId)
-      {$.getJSON('https://www.googleapis.com/plus/v1/people/'+userGoogleId+'?fields=image&key=AIzaSyBh-gi9cHRZFiuggtSprJJLeXTu8ePk0FI', function(data) {
-          imageSource=data.image.url;
-          console.log(imageSource)
-          $("#profileImage").attr('src',imageSource);
-      });}
-      else if(userFacebookId){
-          $("#profileImage").attr('src','http://graph.facebook.com/'+userFacebookId+'/picture?type=large');
-      }
-var read;
+    var read=false;
+    var readBlog=function(element){
+        if(!read){
+            $("#blog-content").css("display","block");
+            $(element).removeClass("btn-primary");
+            $(element).addClass("btn-success");
+            read=true;
+        }
+        else{
+            $("#blog-content").css("display","none");
+            $(element).removeClass("btn-success");
+            $(element).addClass("btn-primary");
+            read=false;
+        }
 
-var readBlog=function(element){
-    let read=false;
-if(!read){
-    $("#blog-content").css("display","block");
-    $(element).removeClass("btn-primary");
-    $(element).addClass("btn-success");
-    read=true;
+
+    };
+
+    $('#contact').click(function() {
+        $('#formContainer').fadeToggle();
+    })
+    $('.cancel').click(function() {
+        $('#formContainer').fadeToggle();
+    })
+
+
+    function validateContactForm(){
+        console.log('hello')
+
+        if(document.forms["contactForm"]["name"].value=='')
+    {document.getElementById("nameError").innerHTML='*Required';
+    return false;
+        }
+     if(document.forms["contactForm"]["DOB"].value=='')
+    {document.getElementById("DOBError").innerHTML='*Required';
+    return false;
+        }
+         if(document.forms["contactForm"]["state"].value=='')
+        {document.getElementById("stateError").innerHTML='*Required';
+            return false;
+        }
+    if(document.forms["contactForm"]["contactNo"].value=='')
+    {document.getElementById("contactError").innerHTML='*Required';
+      return false;  }
+         if(!(/^\d{10}$/.test(document.forms["contactForm"]["contactNo"].value)))
+        {document.getElementById("contactError").innerHTML='*Invalid';
+            return false;
+        }
+         if(document.forms["contactForm"]["guardianName"].value=='')
+        {document.getElementById("guardianError").innerHTML='*Required';
+            return false;
+        }
+
+         if(document.forms["contactForm"]["guardianContactNo"].value=='')
+        {document.getElementById("guardianContactError").innerHTML='*Required';
+            return false;
+        }
+         if(!(/^\d{10}$/.test(document.forms["contactForm"]["guardianContactNo"].value)))
+        {document.getElementById("guardianContactError").innerHTML='*Invalid';
+            return false;
+        }
+
+   return true;
+
 }
-else{
-    $("#blog-content").css("display","none");
-    $(element).removeClass("btn-success");
-    $(element).addClass("btn-primary");
-    read=false;
+    var contactState=document.getElementById("contactState");
+    addState(contactState);
+    var contactState=document.getElementById("contactState");
+    addState(contactState);
+
+
+
+
+
+    function deleteBlog(){
+console.log('delete');
+    }
+    var showPortfolio=true;
+    var showMyBlogs=false;
+$("#portfolio").click(function(){
+    if(showPortfolio){
+    }
+    if(!showPortfolio){
+        $("#myBlogs").css("display","none");
+        $("#myPortfolio").css("display","block");
+        showPortfolio=true;
+        showMyBlogs=false;
+    }
+
+});
+
+    $("#myblog").click(function(){
+        if(showMyBlogs){
+        }
+        if(!showMyBlogs){
+            $("#myPortfolio").css("display","none");
+            $("#myBlogs").css("display","block");
+            showPortfolio=false;
+            showMyBlogs=true;
+        }
+
+    });
+var addSkill=function(){
+    console.log('hell')
+    var inject=document.getElementById("skillForm");
+    var ele=document.createElementNS('div');
+    ele.innerHTML='hell';
+    inject.appendChild(ele);
 }
-
-
-};
-
-
-  </script>
-  </html>
+</script>
+</html>
