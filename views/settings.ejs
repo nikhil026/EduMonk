@@ -50,7 +50,7 @@
 <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">EduMonk</a>
+            <a class="navbar-brand" href="#"><img height="35px" width="35px" src="http://edumonk.herokuappcom/logo.png">EduMonk</a>
         </div>
         <ul class="nav navbar-nav navbar-right">
             <li class="active"><a href="/profile"><img id="profileIcon"  src=""  height="35px" width="35px" class="btn-icon">&nbsp;<%= user.data.info.name || "Profile"%></a></li>
@@ -150,7 +150,7 @@
     </div >
 </div><br><br>
 <div id="academicInfo" style="padding:15px;">
-            <h3 class="text-center">Academic Qualifications<button class="btn btn-primary" id="addEducation" style="padding:10px;font-size:18px">Add Academic Qualifications</button></h3>
+            <h3 class="text-center"><button class="btn btn-primary" id="addEducation" style="padding:10px;font-size:18px">Add Academic Qualifications</button></h3>
        <div class="row">
            <% for(i=0;i<=user.data.pInfo.education.educationQualification.length-1;i++){ %>
            <div class="col-lg-4">
