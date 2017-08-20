@@ -100,13 +100,34 @@
     </div>
     <div class="col-sm-8">
 
-        <div id="pInfoExist" ><h2>Personal Information</h2>
-            <h3>Name:<%= user.data.info.name  %></h3>
-            <h3>Guardian:<%= user.data.info.guardian %></h3>
-            <h3>Date Of Birth:<%= user.data.info.DOB %></h3>
-            <h3>Email:<%= user.local.email || user.data.info.email || user.data.google.email || user.data.facebook.email %></h3>
-            <h3>Location: <%= user.data.info.state %></h3>
-        </div><br>
+        <div id="pInfoExist">
+
+            <h2>Personal Information</h2>
+            <table>
+                <tr>
+                    <td>Name</td>
+                    <td><%= user.data.info.name  %></td>
+                </tr>
+                <tr>
+                    <td>Guardian</td>
+                    <td><%= user.data.info.guardian %></td>
+                </tr>
+                <tr>
+                    <td>Date Of Birth</td>
+                    <td><%= user.data.info.DOB %></h3></td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td><%= user.local.email || user.data.info.email || user.data.google.email || user.data.facebook.email %></td>
+                </tr>
+                <tr>
+                    <td>Location</td>
+                    <td><%= user.data.info.state %></td>
+                </tr>
+            </table>
+
+
+        <br>
         <div id="pInfoNotExist">
             <h2>It Seems a bit empty here !</h2>
             <a class="btn btn-primary" href="profile">Complete your profile first </a>
