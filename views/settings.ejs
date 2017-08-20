@@ -21,11 +21,17 @@
          height:90px;
          font-size:14px;}
         table{
-            background-color:rgba(0,0,0,0.9);
+            background-color:rgba(0,0,0,0.3);
             border:1px solid grey;
+            border-radius:10px;
+            
         }
         td{
             border:0.5px solid grey;
+            width:300px;
+        }
+        .section{
+            width:100px;
         }
     </style>
 </head>
@@ -112,23 +118,23 @@
             <h2>Personal Information</h2>
             <table>
                 <tr>
-                    <td>Name</td>
+                    <td class="section">Name</td>
                     <td><%= user.data.info.name  %></td>
                 </tr>
                 <tr>
-                    <td>Guardian</td>
+                    <td class="section">Guardian</td>
                     <td><%= user.data.info.guardian %></td>
                 </tr>
                 <tr>
-                    <td>Date Of Birth</td>
+                    <td class="section">Date Of Birth</td>
                     <td><%= user.data.info.DOB %></h3></td>
                 </tr>
                 <tr>
-                    <td>Email</td>
+                    <td class="section">Email</td>
                     <td><%= user.local.email || user.data.info.email || user.data.google.email || user.data.facebook.email %></td>
                 </tr>
                 <tr>
-                    <td>Location</td>
+                    <td class="section">Location</td>
                     <td><%= user.data.info.state %></td>
                 </tr>
             </table>
