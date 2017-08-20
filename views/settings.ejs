@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <script src="http://edumonk.herokuapp.com/board-univ.js"></script>
-    <script src="http://edumonk.herokuapp.com"></script>
+    <script src="http://edumonk.herokuapp.com/state.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <style>
@@ -104,69 +104,75 @@
         </div>
     </div >
 </div><br><br>
-<div class="row">
-    <div id="academicInfo" class="col-lg-4 col-lg-offset-1" style="border:0.5px solid green;padding:15px;">
-            <h3 class="text-center">Academic Qualifications</h3>
 
-                <% for(i=0;i<user.data.pInfo.education.educationQualification.length-1;i++){ %>
-        <div style="border:0.5px solid green;padding:15px;margin-top:10px;background-color:rgba(0,0,0,0.8);color:white">
+    <div id="academicInfo" style="border:0.5px solid green;padding:15px;">
+            <h3 class="text-center">Academic Qualifications<button class="btn btn-primary" id="addEducation" style="padding:10px;font-size:18px">Add Academic Qualifications</button></h3>
+       <div class="row">
+           <% for(i=0;i<=user.data.pInfo.education.educationQualification.length-1;i++){ %>
+           <div class="col-lg-4">
+               <div style="border:0.5px solid green;padding:18px;margin-top:10px;background-color:rgba(0,0,0,0.8);color:white">
             <h3>Qualification:  <%= user.data.pInfo.education.educationQualification[i].qualification %> <%= user.data.pInfo.education.educationQualification[i].completion %></h3>
-            <h3>Course:  <%= user.data.pInfo.education.educationQualification[i].course %></h3>
-            <h3>Board/University:  <%= user.data.pInfo.education.educationQualification[i].board_univ %></h3>
-            <h3>State:  <%= user.data.pInfo.education.educationQualification[i].state%></h3>
-        </div>
-       <% } %>
+            <h4>Course:  <%= user.data.pInfo.education.educationQualification[i].course %></h4>
+            <h4>Board/University:  <%= user.data.pInfo.education.educationQualification[i].board_univ %></h4>
+            <h4>State:  <%= user.data.pInfo.education.educationQualification[i].state%></h4>
+               </div>
+         </div>
+           <% } %>
+       </div>
+    </div>
 
 
-        </div>
+
+<div class="row">
     <div class="col-lg-5 col-lg-offset-1">
-        <button class="btn btn-primary" id="addEducation" style="padding:10px;font-size:18px">Add Education</button>
-        <br>
         <div id="professionalInfoForm" style="border:0.5px solid green;padding:15px;display:none">
-        <h2>Add Education </h2>
-        <form   action="settings" method="post">
-            <select class="form-control" name="qualificationInfo">
-                <option selected="true" disabled="disabled"> Qualification</option>
-                <option value="eigth">High School</option>
-                <option value="tenth">Secondary Education 10th </option>
-                <option value="twelfth">Senior Secondary Education 12th</option>
-                <option value="ug">UnderGraduate</option>
-                <option value="pg">Postgraduate</option>
-            </select><br>
-            <select class="form-control" name="boardUniv" id="boardUniv">
-                <option disabled="disabled" selected="true">Select Board/University</option>
-            </select><br>
-            <select class="form-control" name="course">
-                <option disabled="disabled" selected="true">Select Course</option>
-                <option value="secondary">Secondary</option>
-                <option value="senior secondary">Senior Secondary</option>
-                <option value="BA">Bachelors in Arts</option>
-            </select><br>
-            <input class="form-control" type="text" name="schoolCollegeName" placeholder="School/College Name"><br>
-            <select class="form-control" name="academicStatFe" id="academicState">
-                <option selected="true" disabled="disabled" >Select State</option>
-            </select><br>
-            <select name="completion" id="completionDate" class="form-control" placeholder=""Completion Year>
-                <option selected="true" disabled="disabled">Year</option>
-                <option value="2016">2016</option>
-                <option value="2015">2015</option>
-                <option value="2014">2014</option>
-                <option value="2013">2013</option>
-                <option value="2012">2012</option>
-                <option value="2011">2011</option>
-                <option value="2010">2010</option>
-                <option value="2009">2009</option>
-                <option value="2008">2008</option>
-                <option value="2007">2007</option>
-            </select><br>
-            <input class="form-control"   name="marks_cgpa" placeholder="Percentage or CGPA"><br>
-            <!--<span>Add Educational Qualification </span><button type="button" class="fa fa-plus btn btn-primary btn-circle" onclick="addAcademic()"></button>-->
-            <button type="submit" class="btn btn-primary" >Submit</button>
-        </form>
+            <h2>Add Education </h2>
+            <form   name="qualificationForm" action="settings" method="post" onsubmit="return validationQualificationForm()">
+                <select class="form-control" name="qualificationInfo">
+                    <option selected="true" disabled="disabled"> Qualification</option>
+                    <option value="eigth">High School</option>
+                    <option value="tenth">Secondary Education 10th </option>
+                    <option value="twelfth">Senior Secondary Education 12th</option>
+                    <option value="ug">UnderGraduate</option>
+                    <option value="pg">Postgraduate</option>
+                </select><span id="qualificationInfoError"></span><br>
+                <select class="form-control" name="boardUniv" id="boardUniv">
+                    <option disabled="disabled" selected="true">Select Board/University</option>
+                </select><span id="boardUnivError"></span><br>
+                <select class="form-control" name="course">
+                    <option disabled="disabled" selected="true">Select Course</option>
+                    <option value="secondary">Secondary</option>
+                    <option value="senior secondary">Senior Secondary</option>
+                    <option value="BA">Bachelors in Arts</option>
+                </select><span id="courseError"></span><br>
+                <input  class="form-control" name="schoolCollegeName" type="text"  placeholder="School/College Name"><span id="schoolCollegeNameError"></span><br>
+                <select class="form-control" name="academicState" id="academicState">
+                    <option selected="true" disabled="disabled" >Select State</option>
+                </select><span id="academicStateError"></span><br>
+                <select class="form-control" name="completion" id="completionDate"  placeholder=""Completion Year>
+                    <option selected="true" disabled="disabled">Year</option>
+                    <option value="2016">2016</option>
+                    <option value="2015">2015</option>
+                    <option value="2014">2014</option>
+                    <option value="2013">2013</option>
+                    <option value="2012">2012</option>
+                    <option value="2011">2011</option>
+                    <option value="2010">2010</option>
+                    <option value="2009">2009</option>
+                    <option value="2008">2008</option>
+                    <option value="2007">2007</option>
+                </select><span id="completionError"></span><br>
+                <input  class="form-control" name="marks_cgpa" placeholder="Percentage or CGPA"><span id="marks_cgpaError"></span><br>
+                <!--<span>Add Educational Qualification </span><button type="button" class="fa fa-plus btn btn-primary btn-circle" onclick="addAcademic()"></button>-->
+                <button type="submit" class="btn btn-primary" >Submit</button>
+            </form>
+        </div>
     </div>
 </div>
 
-</div>
+
+
+
 
 </body>
 <script>
@@ -193,6 +199,34 @@ $("#addEducation").click(function() {
     else if(showForm){$("#professionalInfoForm").css("display", "none");
     showForm=false;}
 });
+var validationQualificationForm=function(){
+    console.log('called');
+    if(document.forms["qualificationForm"]["qualificationInfo"].value=='')
+    {doument.getElementById("qualificationInfoError").innerHTML='*Required';
+     return false;
+    }
+    if(document.forms["qualificationForm"]["boardUniv"].value=='')
+    {doument.getElementById("boardUnivError").innerHTML='*Required';
+        return false;
+    }
+    if(document.forms["qualificationForm"]["course"].value=='')
+    {doument.getElementById("courseError").innerHTML='*Required';
+        return false;
+    }
+    if(document.forms["qualificationForm"]["schoolCollegeName"].value=='')
+    {doument.getElementById("schoolCollegeNameError").innerHTML='*Required';
+        return false;
+    }
+    if(document.forms["qualificationForm"]["completion"].value=='')
+    {doument.getElementById("completionError").innerHTML='*Required';
+        return false;
+    }
+    if(document.forms["qualificationForm"]["marks_cgpa"].value=='')
+    {doument.getElementById("marks_cgpaError").innerHTML='*Required';
+        return false;
+    }
+    return true;
+};
     </script>
 
 </html>

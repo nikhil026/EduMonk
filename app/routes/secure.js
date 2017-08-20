@@ -10,13 +10,11 @@ router.use(function(req,res,next){
     });
 
     router.post('/profile/settings',function(req,res){
-        console.log(req.body);
-        console.log(req.user);
+        console.log(req.body.qualificationInfo);
         if(req.body.qualificationInfo && req.body.boardUniv && req.body.course && req.body.schoolCollegeName && req.body.completion && req.body.academicState && req.body.marks_cgpa)
           {var user=req.user;
-            console.log(req.body);
            var obj= {
-                qualification:req.body.highestQualificationInfo,
+                qualification:req.body.qualificationInfo,
                 board_univ:req.body.boardUniv,
                 course:req.body.course,
                 school_college:req.body.schoolCollegeName,

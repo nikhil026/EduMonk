@@ -76,7 +76,7 @@
             padding:10px;
         }
         .skill-well{
-            background-color:rgba(1,1,1,0.7);
+            background-color:rgba(1,1,1,0.8);
             color:white;
             padding:20px;
             margin:40px;
@@ -106,10 +106,10 @@
 </nav>
 
 <div class="row" style="background-color:rgb(192, 222, 237);width:100%;height:400px">
-    <div class="col-lg-3 col-lg-offset-2 col-md-4 col-md-offset-3 col-sm-4 col-sm-offset-1 col-xs-6 col-xs-offset-3" >
+    <div class="col-lg-3 col-lg-offset-2 col-md-4 col-md-offset-2 col-sm-4 col-sm-offset-1 col-xs-12 col-xs-offset-1" >
         <img id="profileImage" style="margin-top:100px" src=""  width="300" class="img-circle    ">
     </div>
-    <div class="col-lg-offset-0 col-lg-3 col-md-4 col-md-offset-1 col-lg-offset-2 col-sm-3 col-sm-offset-2 col-xs-8 col-xs-offset-1" style="margin-top:100px">
+    <div class="col-lg-3 col-lg-offset-0 col-md-5 col-md-offset-0 col-sm-6 col-sm-offset-1 col-xs-12 col-xs-offset-1" style="margin-top:100px">
         <div>
             <%if(!(user.data.info.name==undefined)){%>
             <h1>Name:<%= user.data.info.name %></h1>
@@ -147,12 +147,13 @@
                         <option selected="true" disabled="disabled" >Select State</option>x
                     </select><br>
                     <label>Contact</label>
-                    <input class="form-control" type="text" placeholder="Contact Number" name="contactNo"><span id="contactError" class="submissionError"></span><br>
+                    <input class="form-control" type="text" placeholder="Contact Number (10 Digit)" name="contactNo"><span id="contactError" class="submissionError"></span><br>
                     <label>Guardian</label>
                     <input class="form-control" type="text" placeholder="Guardian Name" name="guardianName"><span id="guardianError" class="submissionError"></span><br>
                     <label>Guardian Contact Number</label>
-                     <input class="form-control" type="text" placeholder="Guardian Contact Number" name="guardianContactNo"><span id="guardianContactError" class="submissionError"></span><br>
-                    <input class="form-control btn btn-primary" type="submit" value="Submit">
+                     <input class="form-control" type="text" placeholder="Guardian Contact Number (10 Digit)" name="guardianContactNo"><span id="guardianContactError" class="submissionError"></span><br>
+                <br>
+                <input class="form-control btn btn-primary" type="submit" value="Submit">
                 </form>
             </div>
 
@@ -165,19 +166,20 @@
 </div>
 
 <div id="myPortfolio" >
-
+<br>
        <div class="row">
-           <div class="col-lg-5 col-lg-offset-4">
-               <span style="font-size:50px;left:100px;">Add a Skill <button class="fa fa-plus btn btn-primary btn-circle" onclick="addSkill()"></button></span>
-               <h3>Add a Skill </h3>
-                <form id="skillForm" action="profile" method="post">
+           <div class="col-lg-5 col-lg-offset-3">
+               <span style="font-size:50px;">Hello <%= user.data.info.name %>-Add some skills <button style="font-size:50px" class="fa fa-plus btn btn-primary btn-circle" id="addSkillButton" onclick="addSkill()"></button></span>
+
+                <form id="skillForm" name="mySkillForm" action="profile" method="post" onsubmit="return skillFormValidation()" style="display:none">
+                    <h3>Add a Skill </h3>
                                                <div class="form-group">
                                                        <label>Field</label>
-                                                       <input type="text" class="form-control" name="field">
+                                                       <input type="text" class="form-control" name="field"><span id="skillFieldError"></span>
                                                    </div>
                                                <div class="form-group">
                                                        <label>Experience</label>
-                                                       <input type="number" placeholder="Experience in years" class="form-control" name="experience" min="0" max="20">' +
+                                                       <input type="number" placeholder="Experience in years" class="form-control" name="experience" min="0" max="20"><span id="skillExperiencedError"></span>
                                                    </div>
                                                <div class="form-group">
                                                        <label>Project/s If Any</label>
@@ -185,19 +187,20 @@
                                                        <input type="text" class="form-control" placeholder="project 2" name="project2"><br>
                                                        <input type="text" class="form-control" placeholder="project 3" name="project3"><br>
                                                            <textarea id="skillDescription" name="description" rows="15" cols="75"
-                       placeholder="Describe your project/s ,skill and experience,be as descriptive as you can !"></textarea><br>
+                       placeholder="Describe your project/s ,skill and experience,be as descriptive as you can !"></textarea><span id="skillDescriptionError"></span><br>
                                                    </div>
                                      <button type="button" class="btn btn-danger" onclick="cancelCreateSkill()">Cancel</button>
-                                               <button type="submit" class="btn btn-success">Add</button>
+                                               <button type="submit" class="btn btn-success">Add</button>'
                                            </form>
 
 
            </div>
-           <div class="col-lg-8 col-lg-offset-2 " id="skillList">  <br>
+           <div class="col-lg-8 col-lg-offset-2 " id="skillList">
+               <h3 class="col-lg-offset-5">Your Skills</h3>
                <div> <% for(var i=user.data.pInfo.education.skills.length-1; i>=0 ;i--){ %>
 
                    <div class="skill-well">
-                       <h2 style="font-size:25px"><%= user.data.pInfo.education.skills[i].field %>&nbsp;&nbsp;- <%= user.data.pInfo.education.skills[i].experience %> Years</h2>
+                       <h2 style="font-size:25px" ><%= user.data.pInfo.education.skills[i].field %>&nbsp;&nbsp;- <%= user.data.pInfo.education.skills[i].experience %> Years</h2>
                        <% for(var j=0;j<=user.data.pInfo.education.skills[i].projects.length-1;j++){ %>
                        <h3> Project <%= j+1%>.<%= user.data.pInfo.education.skills[i].projects[j]  %></h3>
                        <% }%>
@@ -217,18 +220,18 @@
                 <h1 class="text-center">My Blog List - Add a blog &nbsp;<button onclick="showAddBlog()" class="btn-circle btn btn-primary fa fa-plus fa-2x" style="font-size:25px"></button></h1>
                 <div class="row">
                     <div class="col-lg-offset-2 col-lg-8">
-                        <form id="myForm" action="profile" method="post" style="display:none">
+                        <form id="myForm" name="myBlogForm" action="profile" method="post" onsubmit="return blogForm()"style="display:none">
                             <div class="form-group">
                                 <label>Blog Title</label>
-                                <input type="text" class="form-control" name="title">
+                                <input type="text" class="form-control" name="title"><span id="blogTitleError"></span>
                             </div>
                             <div class="form-group">
                                 <label>Description</label>
-                                <input type="text" class="form-control" name="description">
+                                <input type="text" class="form-control" name="description"><span id="blogDescriptionError"></span>
                             </div>
                             <div class="form-group">
                                 <label>Blog</label>
-                                <input type="text" class="form-control" name="content" placeholder="Blog Content">
+                                <input type="text" class="form-control" name="content" placeholder="Blog Content"><span id="blogContentError"></span>
                             </div>
                             <button type="button" class="btn btn-danger" onclick="showAddBlog()">Cancel</button>
                             <button type="submit" class="btn btn-success">Post</button>
@@ -295,10 +298,17 @@
     var addSkill=function(){
     if(!skillShowMe)    {
         $("#skillForm").css("display","block");
+        $("#addSkillButton").remove("fa-plus");
+        skillShowMe=true;
     }else{
         $("#skillForm").css("display","none");
+        skillShowMe=false;
     }
-
+    };
+var cancelCreateSkill=function(){
+    console.log('done');
+    $("#skillForm").css("display","none");
+}
 
 
 
@@ -428,7 +438,37 @@ console.log('delete');
     var cancelCreateSkill=function(){
         $("#personalForm").css("display","none");
     }
+function blogForm(){
+    if(document.forms["myBlogForm"]["title"].value=='')
+    {   document.getElementById('blogTitleError').innerHTML='*Required';
+        return false;
+    }
+    if(document.forms["myBlogForm"]["description"].value=='')
+    {   document.getElementById('blogDescriptionError').innerHTML='*Required';
+        return false;
+    }
+    if(document.forms["myBlogForm"]["content"].value=='')
+    {   document.getElementById('blogContentError').innerHTML='*Required';
+        return false;
+    }
+   return false;
 
+}
+function skillFormValidation(){
+    if(document.forms["mySkillForm"]["field"].value=='')
+    {   document.getElementById('skillFieldError').innerHTML='*Required';
+        return false;
+    }
+    if(document.forms["mySkillForm"]["experience"].value=='')
+    {   document.getElementById('skillExperienceError').innerHTML='*Required';
+        return false;
+    }
+    if(document.forms["mySkillForm"]["description"].value=='')
+    {   document.getElementById('skillDescriptionContentError').innerHTML='*Required';
+        return false;
+    }
+    return true;
+}
 
 </script>
 </html>
