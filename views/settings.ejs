@@ -20,6 +20,7 @@
     <span style="display:none"  id="googleId"><%= user.google.id %></span>
     <span style="display:none"  id="facebookId"><%= user.facebook.id %></span>
     <span style="display:none" id="userPersonalPresent"><%= user.data.info.name %></span>
+    <span style="display:none" ><%= user.data.info.name%></span>
 </div>
 
 <nav class="navbar navbar-default">
@@ -35,14 +36,15 @@
         </ul>
     </div>
 </nav>
-<span style="display:none" ><%= user.data.info.name%></span>
+
 <div class="row">
-    <div class="col-sm-4">
+    <div class=" col-lg-3 col-lg-offset-1">
         <h2>Accounts</h2>
         <div class="well">
             <h3><span class="fa fa-user"></span> Local</h3>
 
             <% if (user.local.email) { %>
+            <p>
             <p>
                 <strong>SignUp Email</strong>: <%= user.local.email %><br>
             </p>
@@ -93,59 +95,79 @@
             <h3>Name:<%= user.data.info.name  %></h3>
             <h3>Guardian:<%= user.data.info.guardian %></h3>
             <h3>Date Of Birth:<%= user.data.info.DOB %></h3>
-            <h3>Email:<%= user.data.info.email %></h3>
+            <h3>Email:<%= user.local.email || user.data.info.email || user.data.google.email || user.data.facebook.email %></h3>
+            <h3>Location: <%= user.data.info.state %></h3>
         </div><br>
         <div id="pInfoNotExist">
             <h2>It Seems a bit empty here !</h2>
             <a class="btn btn-primary" href="profile">Complete your profile first </a>
         </div>
     </div >
+</div><br><br>
+<div class="row">
+    <div id="academicInfo" class="col-lg-4 col-lg-offset-1" style="border:0.5px solid green;padding:15px;">
+            <h3 class="text-center">Academic Qualifications</h3>
+
+                <% for(i=0;i<user.data.pInfo.education.educationQualification.length-1;i++){ %>
+        <div style="border:0.5px solid green;padding:15px;margin-top:10px;background-color:rgba(0,0,0,0.8);color:white">
+            <h3>Qualification:  <%= user.data.pInfo.education.educationQualification[i].qualification %> <%= user.data.pInfo.education.educationQualification[i].completion %></h3>
+            <h3>Course:  <%= user.data.pInfo.education.educationQualification[i].course %></h3>
+            <h3>Board/University:  <%= user.data.pInfo.education.educationQualification[i].board_univ %></h3>
+            <h3>State:  <%= user.data.pInfo.education.educationQualification[i].state%></h3>
+        </div>
+       <% } %>
+
+
+        </div>
+    <div class="col-lg-5 col-lg-offset-1">
+        <button class="btn btn-primary" id="addEducation" style="padding:10px;font-size:18px">Add Education</button>
+        <br>
+        <div id="professionalInfoForm" style="border:0.5px solid green;padding:15px;display:none">
+        <h2>Add Education </h2>
+        <form   action="settings" method="post">
+            <select class="form-control" name="qualificationInfo">
+                <option selected="true" disabled="disabled"> Qualification</option>
+                <option value="eigth">High School</option>
+                <option value="tenth">Secondary Education 10th </option>
+                <option value="twelfth">Senior Secondary Education 12th</option>
+                <option value="ug">UnderGraduate</option>
+                <option value="pg">Postgraduate</option>
+            </select><br>
+            <select class="form-control" name="boardUniv" id="boardUniv">
+                <option disabled="disabled" selected="true">Select Board/University</option>
+            </select><br>
+            <select class="form-control" name="course">
+                <option disabled="disabled" selected="true">Select Course</option>
+                <option value="secondary">Secondary</option>
+                <option value="senior secondary">Senior Secondary</option>
+                <option value="BA">Bachelors in Arts</option>
+            </select><br>
+            <input class="form-control" type="text" name="schoolCollegeName" placeholder="School/College Name"><br>
+            <select class="form-control" name="academicStatFe" id="academicState">
+                <option selected="true" disabled="disabled" >Select State</option>
+            </select><br>
+            <select name="completion" id="completionDate" class="form-control" placeholder=""Completion Year>
+                <option selected="true" disabled="disabled">Year</option>
+                <option value="2016">2016</option>
+                <option value="2015">2015</option>
+                <option value="2014">2014</option>
+                <option value="2013">2013</option>
+                <option value="2012">2012</option>
+                <option value="2011">2011</option>
+                <option value="2010">2010</option>
+                <option value="2009">2009</option>
+                <option value="2008">2008</option>
+                <option value="2007">2007</option>
+            </select><br>
+            <input class="form-control"   name="marks_cgpa" placeholder="Percentage or CGPA"><br>
+            <!--<span>Add Educational Qualification </span><button type="button" class="fa fa-plus btn btn-primary btn-circle" onclick="addAcademic()"></button>-->
+            <button type="submit" class="btn btn-primary" >Submit</button>
+        </form>
+    </div>
 </div>
 
-<div class="col-lg-6 col-lg-offset-3">
-    <h3 class="text-center">Academic Qualifications</h3>
-    <form  id="professionalInfoForm"  action="settings" method="post">
-        <select class="form-control" name="highestQualificationInfo">
-            <option selected="true" disabled="disabled">Highest Qualification</option>
-            <option value="eigth">High School</option>
-            <option value="tenth">Secondary Education 10th </option>
-            <option value="twelfth">Senior Secondary Education 12th</option>
-            <option value="ug">UnderGraduate</option>
-            <option value="pg">Postgraduate</option>
-        </select><br>
-        <select class="form-control" id="boardUniv">
-            <option disabled="disabled" selected="true">Select Board/University</option>
-        </select><br>
-        <select class="form-control" name="course">
-            <option disabled="disabled" selected="true">Select Course</option>
-            <option value="secondary">Secondary</option>
-            <option value="senior secondary">Senior Secondary</option>
-            <option value="BA">Bachelors in Arts</option>
-        </select><br>
-        <input class="form-control" type="text" name="schoolCollegeName" placeholder="School/College Name"><br>
-        <select class="form-control" name="academicState" id="academicState">
-            <option selected="true" disabled="disabled" >Select State</option>
-        </select><br>
-        <select name="completion" id="completionDate" class="form-control" placeholder=""Completion Year>
-            <option selected="true" disabled="disabled">Year</option>
-            <option value="2016">2016</option>
-            <option value="2015">2015</option>
-            <option value="2014">2014</option>
-            <option value="2013">2013</option>
-            <option value="2012">2012</option>
-            <option value="2011">2011</option>
-            <option value="2010">2010</option>
-            <option value="2009">2009</option>
-            <option value="2008">2008</option>
-            <option value="2007">2007</option>
-        </select><br>
-        <input class="form-control"   name="marks_cgpa" placeholder="Percentage or CGPA"><br>
-        <!--<span>Add Educational Qualification </span><button type="button" class="fa fa-plus btn btn-primary btn-circle" onclick="addAcademic()"></button>-->
-        <button type="submit" class="btn btn-primary" >Submit</button>
-    </form>
-
 </div>
-<%= user.data%>
+
 </body>
 <script>
     var userPersonalPresent=$("#userPersonalPresent").html();
@@ -164,8 +186,13 @@
     var boardUniv=document.getElementById("boardUniv");
     addOptionBoardUniv(boardUniv);
 
-
-
+    var showForm=false;
+$("#addEducation").click(function() {
+    if(!showForm){$("#professionalInfoForm").css("display", "block");
+    showForm=true;}
+    else if(showForm){$("#professionalInfoForm").css("display", "none");
+    showForm=false;}
+});
     </script>
 
 </html>

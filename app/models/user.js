@@ -36,16 +36,22 @@ var userSchema = mongoose.Schema({
           },
         pInfo:{
           education:{
-              highestQualification:{
-               qualification:String,
-                board_univ:String,
-                course:String,
-                school_college:String,
-                  state:String,
-                  percentage_cgpa:String,
-                  completion:String
+                 educationQualification:[{
+                     qualification:String,
+                     board_univ:String,
+                     course:String,
+                     school_college:String,
+                     state:String,
+                     percentage_cgpa:String,
+                     completion:String
 
-              }
+                 }],
+              skills:[{
+                  field:String,
+                  experience:Number,
+                  projects:[String],
+                  description:String
+              }]
           }
         },
       blogs :      [
