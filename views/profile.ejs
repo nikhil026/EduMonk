@@ -94,7 +94,7 @@
 <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#"><img width="40px" height="40px" src="http://edumonk.herokuapp.com/logo.png"></a>
+            <a class="navbar-brand" href="#"><img width="35px" height="35px" src="http://edumonk.herokuapp.com/logo.png"></a>
         </div>
         <ul class="nav navbar-nav navbar-right">
             <li class="active"><a href="/profile"><img id="profileIcon"  src=""  width="300px" class="btn-icon"> &nbsp;&nbsp<%= user.data.info.name || "Profile"%></a></li>
@@ -130,32 +130,33 @@
 </div>
 
 
-<div class="col-lg-8 col-sm-10 col-sm-offset-1 col-xs-12 col-lg-offset-2 "  style="display:none" id="formContainer">
-            <a class="fa fa-times cancel"  style="color:white" > </a>
-            <form id="contactForm" action="profile" method="post" onsubmit="return validateContactForm()" style="margin:20px;">
-                <div class="text-center">
-                    <h1>Let's Complete Your Profile !</h1>
-                    <h2>Personal Information</h2></div>
-                    <br><br>
-                    <input class="form-control" type="text" placeholder="Name" name="name"><span id="nameError" class="submissionError"></span><br>
-                    <label>Gender:</label>
-                    <label>Male</label> <input type="radio" value="M" name="gender" checked>&nbsp;
-                    <label>Female</label> <input type="radio" value="F" name="gender"><br><br>
-                    <label>Date of Birth</label><input class="form-control" type="date" name="DOB" ><span class="submissionError" id="DOBError"></span><br>
-                    <label>Select State</label>
-                    <select class="form-control" name="state" id="contactState"><span id="stateError" class="submissionError"></span>
-                        <option selected="true" disabled="disabled" >Select State</option>x
-                    </select><br>
-                    <label>Contact</label>
-                    <input class="form-control" type="text" placeholder="Contact Number (10 Digit)" name="contactNo"><span id="contactError" class="submissionError"></span><br>
-                    <label>Guardian</label>
-                    <input class="form-control" type="text" placeholder="Guardian Name" name="guardianName"><span id="guardianError" class="submissionError"></span><br>
-                    <label>Guardian Contact Number</label>
-                     <input class="form-control" type="text" placeholder="Guardian Contact Number (10 Digit)" name="guardianContactNo"><span id="guardianContactError" class="submissionError"></span><br>
-                <br>
-                <input class="form-control btn btn-primary" type="submit" value="Submit">
-                </form>
-</div>
+<div class="row">
+    <div class="col-lg-8 col-sm-10 col-sm-offset-1 col-xs-12 col-lg-offset-2 "  style="display:none" id="formContainer">
+        <a class="fa fa-times cancel"  style="color:white" > </a>
+        <form id="contactForm" action="profile" method="post" onsubmit="return validateContactForm()" style="margin:20px;">
+            <div class="text-center">
+                <h1>Let's Complete Your Profile !</h1>
+                <h2>Personal Information</h2></div>
+            <br><br>
+            <input class="form-control" type="text" placeholder="Name" name="name"><span id="nameError" class="submissionError"></span><br>
+            <label>Gender:</label>
+            <label>Male</label> <input type="radio" value="M" name="gender" checked>&nbsp;
+            <label>Female</label> <input type="radio" value="F" name="gender"><br><br>
+            <label>Date of Birth</label><input class="form-control" type="date" name="DOB" ><span class="submissionError" id="DOBError"></span><br>
+            <label>Select State</label>
+            <select class="form-control" name="state" id="contactState"><span id="stateError" class="submissionError"></span>
+                <option selected="true" disabled="disabled" >Select State</option>x
+            </select><br>
+            <label>Contact</label>
+            <input class="form-control" type="text" placeholder="Contact Number (10 Digit)" name="contactNo"><span id="contactError" class="submissionError"></span><br>
+            <label>Guardian</label>
+            <input class="form-control" type="text" placeholder="Guardian Name" name="guardianName"><span id="guardianError" class="submissionError"></span><br>
+            <label>Guardian Contact Number</label>
+            <input class="form-control" type="text" placeholder="Guardian Contact Number (10 Digit)" name="guardianContactNo"><span id="guardianContactError" class="submissionError"></span><br>
+            <br>
+            <input class="form-control btn btn-primary" type="submit" value="Submit">
+        </form>
+    </div></div>
 
 
 
