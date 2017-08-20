@@ -21,14 +21,14 @@
          height:90px;
          font-size:14px;}
         table{
-            background-color:rgba(0,0,0,0.1);
+            background-color:rgba(0,0,0,0.05);
             border:1px solid grey;
             border-radius:5px;
 
         }
         td{
-            border:0.5px solid grey;
-            width:600px;
+            border:0.1px solid grey;
+            width:500px;
             padding:20px;
             font-size:20px;
         }
@@ -50,7 +50,7 @@
 <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#"><img height="35px" width="35px" src="http://edumonk.herokuappcom/logo.png">EduMonk</a>
+            <a class="navbar-brand" href="#"><img height="30px" width="30px" src="http://edumonk.herokuapp.com/logo.png">EduMonk</a>
         </div>
         <ul class="nav navbar-nav navbar-right">
             <li class="active"><a href="/profile"><img id="profileIcon"  src=""  height="35px" width="35px" class="btn-icon">&nbsp;<%= user.data.info.name || "Profile"%></a></li>
@@ -129,7 +129,7 @@
                 </tr>
                 <tr>
                     <td class="section">Date Of Birth</td>
-                    <td><%= user.data.info.DOB %></h3></td>
+                    <td><%= user.data.info.DOB %></td>
                 </tr>
                 <tr>
                     <td class="section">Email</td>
