@@ -169,8 +169,31 @@
        <div class="row">
            <div class="col-lg-5 col-lg-offset-4">
                <span style="font-size:50px;left:100px;">Add a Skill <button class="fa fa-plus btn btn-primary btn-circle" onclick="addSkill()"></button></span>
+               <h3>Add a Skill </h3>
+                <form id="skillForm" action="profile" method="post">
+                                               <div class="form-group">
+                                                       <label>Field</label>
+                                                       <input type="text" class="form-control" name="field">
+                                                   </div>
+                                               <div class="form-group">
+                                                       <label>Experience</label>
+                                                       <input type="number" placeholder="Experience in years" class="form-control" name="experience" min="0" max="20">' +
+                                                   </div>
+                                               <div class="form-group">
+                                                       <label>Project/s If Any</label>
+                                                       <input type="text" class="form-control" placeholder="project 1" name="project1"><br>
+                                                       <input type="text" class="form-control" placeholder="project 2" name="project2"><br>
+                                                       <input type="text" class="form-control" placeholder="project 3" name="project3"><br>
+                                                           <textarea id="skillDescription" name="description" rows="15" cols="75"
+                       placeholder="Describe your project/s ,skill and experience,be as descriptive as you can !"></textarea><br>
+                                                   </div>
+                                     <button type="button" class="btn btn-danger" onclick="cancelCreateSkill()">Cancel</button>
+                                               <button type="submit" class="btn btn-success">Add</button>
+                                           </form>
+
+
            </div>
-           <div class="col-lg-8 col-lg-offset-2 " id="skillForm">  <br>
+           <div class="col-lg-8 col-lg-offset-2 " id="skillList">  <br>
                <div> <% for(var i=user.data.pInfo.education.skills.length-1; i>=0 ;i--){ %>
 
                    <div class="skill-well">
@@ -249,6 +272,7 @@
     console.log(userGoogleId);
     console.log(userFacebookId);
     console.log(personalInfoExisting);
+
     if(personalInfoExisting==''){
         $("#formContainer").css("display","block");
     }
@@ -267,6 +291,16 @@
         }
 
     }
+    var skillShowMe=false;
+    var addSkill=function(){
+    if(!skillShowMe)    {
+        $("#skillForm").css("display","block");
+    }else{
+        $("#skillForm").css("display","none");
+    }
+
+
+
 
     var imageSource;
     if(userFacebookId){
@@ -395,34 +429,6 @@ console.log('delete');
         $("#personalForm").css("display","none");
     }
 
-var addSkill=function(){
-
-    var inject=document.getElementById("skillForm");
-    var ele=document.createElement("div");
-    ele.setAttribute("id","personalForm");
-    ele.innerHTML='  <h3>Add a Skill </h3>   ' +
-        ' <form id="myForm" action="profile" method="post">' +
-        '                            <div class="form-group">\n' +
-        '                                <label>Field</label>\n' +
-        '                                <input type="text" class="form-control" name="field">' +
-        '                            </div>\n' +
-        '                            <div class="form-group">\n' +
-        '                                <label>Experience</label>\n' +
-        '                                <input type="number" placeholder="Experience in years" class="form-control" name="experience" min="0" max="20">' +
-        '                            </div>' +
-        '                            <div class="form-group">' +
-        '                                <label>Project/s If Any</label>' +
-        '                                <input type="text" class="form-control" placeholder="project 1" name="project1"><br>' +
-        '                                <input type="text" class="form-control" placeholder="project 2" name="project2"><br>' +
-        '                                <input type="text" class="form-control" placeholder="project 3" name="project3"><br>' +
-        '                                    <textarea id="skillDescription" name="description" rows="15" cols="75" ' +
-        'placeholder="Describe your project/s ,skill and experience,be as descriptive as you can !"></textarea><br>'+
-        '                            </div>'+
-        '                  <button type="button" class="btn btn-danger" onclick="cancelCreateSkill()">Cancel</button>\n' +
-        '                            <button type="submit" class="btn btn-success">Add</button>'
-        '                        </form>'
-    inject.prepend(ele);
-};
 
 </script>
 </html>
