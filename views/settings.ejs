@@ -135,12 +135,12 @@
     </div >
 </div><br><br>
 
-    <div id="academicInfo" style="border:0.5px solid green;padding:15px;">
+    <div id="academicInfo" style="padding:15px;">
             <h3 class="text-center">Academic Qualifications<button class="btn btn-primary" id="addEducation" style="padding:10px;font-size:18px">Add Academic Qualifications</button></h3>
        <div class="row">
            <% for(i=0;i<=user.data.pInfo.education.educationQualification.length-1;i++){ %>
            <div class="col-lg-4">
-               <div style="border:0.5px solid green;padding:18px;margin-top:10px;background-color:rgba(0,0,0,0.8);color:white">
+               <div style="padding:18px;margin-top:10px;background-color:rgba(0,0,0,0.8);color:white">
             <h3>Qualification:  <%= user.data.pInfo.education.educationQualification[i].qualification %> <%= user.data.pInfo.education.educationQualification[i].completion %></h3>
             <h4>Course:  <%= user.data.pInfo.education.educationQualification[i].course %></h4>
             <h4>Board/University:  <%= user.data.pInfo.education.educationQualification[i].board_univ %></h4>
