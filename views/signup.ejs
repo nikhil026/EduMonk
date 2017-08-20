@@ -5,16 +5,20 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <style>
-        body         { padding-top:80px; }
+              body         { padding-top:60px;
+            font-size:25px;}
     </style>
 </head>
 <body>
-<div class="container">
-<div class="col-sm-6 col-sm-offset-3">
+<div class="container" >
+    <div >
 
-    <h1><span class="fa fa-sign-in"></span> Signup</h1>
-
-    <% if (message.length > 0) { %>
+        <div class="col-lg-5 col-lg-offset-3 col-xs-10 col-xs-offset-1" style="border:0.5px solid grey;padding:20px">
+            <div style="border:0.5px solid grey">
+                <img src="http://edumonk.herokuapp.com:8080/logo.png" height="300px" width="250px" style="margin-left:100px" >
+            </div>
+            <h1><span class="fa fa-sign-in"></span> Signup</h1>
+            <% if (message.length > 0) { %>
         <div class="alert alert-danger"><%= message %></div>
     <% } %>
 
@@ -42,6 +46,8 @@
     <p>Or go <a href="/auth">home</a>.</p>
 
 </div>
+
+    </div>
 </div>
 <script>
     function validateForm() {

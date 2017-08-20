@@ -6,11 +6,20 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <script src="http://edumonk.herokuapp.com/board-univ.js"></script>
     <script src="http://edumonk.herokuapp.com/state.js"></script>
+    <script src="http://edumonk.herokuapp.com/course.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <style>
-
+        body{overflow-x: hidden;}
      .well{width:340px;}
+        .btn-icon{ height:30px;
+             width:30px;
+             border-radius:50%;}
+     .btn-circle {
+         border-radius:50%;
+         width:90px;
+         height:90px;
+         font-size:14px;}
     </style>
 </head>
 <body>
@@ -29,7 +38,7 @@
             <a class="navbar-brand" href="#">EduMonk</a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="/profile"><%= user.data.info.name || "Profile"%></a></li>
+            <li class="active"><a href="/profile"><img id="profileIcon"  src=""  height="35px" width="35px" class="btn-icon">&nbsp;<%= user.data.info.name || "Profile"%></a></li>
             <li ><a href="#">Scholarships</a></li>
             <li><a href="/profile/settings" class="fa fa-cog"> Settings</a></li>
             <li><a  href="/auth/logout" class="  fa fa-user"> Logout</a></li>
@@ -124,7 +133,7 @@
 
 
 <div class="row">
-    <div class="col-lg-5 col-lg-offset-1">
+    <div class="col-lg-6 col-lg-offset-3">
         <div id="professionalInfoForm" style="border:0.5px solid green;padding:15px;display:none">
             <h2>Add Education </h2>
             <form   name="qualificationForm" action="settings" method="post" onsubmit="return validationQualificationForm()">
@@ -139,11 +148,10 @@
                 <select class="form-control" name="boardUniv" id="boardUniv">
                     <option disabled="disabled" selected="true">Select Board/University</option>
                 </select><span id="boardUnivError"></span><br>
-                <select class="form-control" name="course">
+                <select class="form-control" name="course" id="academicCourse">
                     <option disabled="disabled" selected="true">Select Course</option>
                     <option value="secondary">Secondary</option>
                     <option value="senior secondary">Senior Secondary</option>
-                    <option value="BA">Bachelors in Arts</option>
                 </select><span id="courseError"></span><br>
                 <input  class="form-control" name="schoolCollegeName" type="text"  placeholder="School/College Name"><span id="schoolCollegeNameError"></span><br>
                 <select class="form-control" name="academicState" id="academicState">
@@ -176,6 +184,9 @@
 
 </body>
 <script>
+    var userGoogleId=$("#googleId").html();
+    var userFacebookId=$("#facebookId").html();
+    var personalInfoExisting=$("#personalInfoExisting").html();
     var userPersonalPresent=$("#userPersonalPresent").html();
     if(userPersonalPresent==''){
         $('#pInfoExist').css("display","none");
@@ -188,6 +199,8 @@
 
     var academicState=document.getElementById("academicState");
     addState(academicState);
+    var academicCourse=document.getElementById("academicCourse");
+    addCourse(academicCourse);
 
     var boardUniv=document.getElementById("boardUniv");
     addOptionBoardUniv(boardUniv);
@@ -227,6 +240,24 @@ var validationQualificationForm=function(){
     }
     return true;
 };
+
+
+    var imageSource;
+    if(userFacebookId){
+        $("#profileImage").attr('src','http://graph.facebook.com/'+userFacebookId+'/picture?type=large');
+        $("#profileIcon").attr('src','http://graph.facebook.com/'+userFacebookId+'/picture?type=large');
+    }
+    else if(userGoogleId)
+    {$.getJSON('https://www.googleapis.com/plus/v1/people/'+userGoogleId+'?fields=image&key=AIzaSyBh-gi9cHRZFiuggtSprJJLeXTu8ePk0FI', function(data) {
+        imageSource=data.image.url;
+        console.log(imageSource.length)
+        $("#profileImage").attr('src',imageSource);
+        $("#profileIcon").attr('src',imageSource);
+    });}
+    else{
+        $("#profileImage").attr('src','http://edumonk.herokuapp.com/default-profile.jpg');
+        $("#profileIcon").attr('src','http://edumonk.herokuapp.com/default-profile.jpg');
+    }
     </script>
 
 </html>
