@@ -11,16 +11,10 @@ module.exports = {
 
     },
 
-    'twitterAuth' : {
-        'consumerKey'        : 'your-consumer-key-here',
-        'consumerSecret'     : 'your-client-secret-here',
-        'callbackURL'        : 'http://localhost:8080/auth/twitter/callback'
-    },
-
     'googleAuth' : {
         'clientID'         : '842917659340-9m8bamcnndgdru6s1h610fp22ucki1un.apps.googleusercontent.com',
         'clientSecret'     : 'QTQ5ADogIisOMi4-uYX2mdqU',
-        'callbackURL'      : 'http://localhost:8080/auth/google/callback'
+        'callbackURL'      : 'http://edumonk.herokuapp.com/auth/google/callback'
     }
 
 };
