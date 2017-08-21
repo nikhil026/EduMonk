@@ -242,11 +242,11 @@
                 <div >
                     <div style="border:0.5px solid greenyellow;padding:20px">
                         <span  style="font-size:25px;" id="singleBlog">
-                            <%= user.data.blogs[i].title %>: &nbsp;&nbsp;<%= user.data.blogs[i].description %>
+                            <%= user.data.blogs[i].title %>: &nbsp;&nbsp;&nbsp;<%= user.data.blogs[i].description %>
                             <button  style="float:right" class="btn btn-danger"  onclick="">Delete</button>
                             <button style="float:right" class="btn btn-primary"  onclick="">Read</button>
-                            <p id="blog-content"><%= user.data.blogs[i].content %></p>
                         </span>
+                        <p id="blog-content"><%= user.data.blogs[i].content %></p>
                     </div>
                     <% } %>
 
