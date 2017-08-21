@@ -435,7 +435,7 @@ console.log('delete');
 
         }
     });
-   
+
 function blogForm(){
     if(document.forms["myBlogForm"]["title"].value=='')
     {   document.getElementById('blogTitleError').innerHTML='*Required';
@@ -462,7 +462,7 @@ function skillFormValidation(){
         return false;
     }
     if(document.forms["mySkillForm"]["description"].value=='')
-    {   document.getElementById('skillDescriptionContentError').innerHTML='*Required';
+    {   document.getElementById('skillDescriptionError').innerHTML='*Required';
         return false;
     }
     return true;
