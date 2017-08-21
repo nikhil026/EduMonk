@@ -191,7 +191,7 @@
                        placeholder="Describe your project/s ,skill and experience,be as descriptive as you can !"></textarea><span id="skillDescriptionError"></span><br>
                                                    </div>
                                      <button type="button" class="btn btn-danger" onclick="cancelCreateSkill()">Cancel</button>
-                                               <button type="submit" class="btn btn-success">Add</button>'
+                                               <button type="submit" class="btn btn-success">Add</button>
                                            </form>
 
 
@@ -240,12 +240,13 @@
                 </div>
                 <% for(var i=user.data.blogs.length-1; i>=0 ;i--){ %>
                 <div >
-                    <div style="border:0.5px solid greenyellow;padding:20px;"><span  style="font-size:25px"><%= user.data.blogs[i].title %>: &nbsp&nbsp;<%= user.data.blogs[i].description %>
-                            <button  style="float:right" class="btn btn-danger" type="submit" action="profile" method="get">Delete</button>
+                    <div style="border:0.5px solid greenyellow;padding:20px;">
+                        <span  style="font-size:25px" id="singleBlog">
+                            <%= user.data.blogs[i].title %>: &nbsp&nbsp;<%= user.data.blogs[i].description %>
+                            <button  style="float:right" class="btn btn-danger" type="submit" onclick="deleteBlog()">Delete</button>
                             <button style="float:right" class="btn btn-primary"  onclick="readBlog(this)">Read</button>
                             <p id="blog-content"><%= user.data.blogs[i].content %></p>
-
-            </span>
+                        </span>
                     </div>
                     <% } %>
 
@@ -467,6 +468,9 @@ function skillFormValidation(){
     }
     return true;
 }
+deleteBlog(){
+    document.getElementById("singleBlog").style.display='none';
+    }
 
 </script>
 </html>
